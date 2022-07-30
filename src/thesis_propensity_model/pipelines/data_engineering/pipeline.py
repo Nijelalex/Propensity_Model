@@ -12,12 +12,10 @@ def create_pipeline(**kwargs):
         [
             node(
                 func=preprocess,
-                inputs=["bank_raw"],
+                inputs=["bank_raw","params:Outlier_params"],
                 outputs="model_input_table",
                 name="preprocessing",
             )
         ],
-        namespace="data_processing",
-        inputs=["bank_raw"],
-        outputs=["model_input_table"]
+        
     )
