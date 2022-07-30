@@ -7,3 +7,8 @@ bank_raw:
   type: pandas.CSVDataSet
   filepath: data/01_raw/bank-additional-full.csv
   layer: raw
+
+model_input_table:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/model_input_table.pq
+  layer: primary
