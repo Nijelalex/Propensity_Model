@@ -1,23 +1,21 @@
-"""Example code for the nodes in the example pipeline. This code is meant
-just for illustrating basic Kedro features.
-Delete this when you start working on your own Kedro project.
+"""Data Engineering Pipeline
 """
 
-from kedro.pipeline import node, pipeline
-from .nodes import preprocess
+
+from thesis_propensity_model.pipelines.data_engineering.Preprocessing.pipeline import create_preprocess_pipeline
+from thesis_propensity_model.pipelines.data_engineering.Data_Encoding.pipeline import create_encoding_pipeline
+from kedro.pipeline import pipeline, Pipeline
 
 
-def create_pipeline(**kwargs):
+
+def create_de_pipeline():
+    
     return pipeline(
+        pipe=Pipeline(
         [
-            node(
-                func=preprocess,
-                inputs=["bank_raw"],
-                outputs="model_input_table",
-                name="preprocessing",
-            )
-        ],
-        namespace="data_processing",
-        inputs=["bank_raw"],
-        outputs=["model_input_table"]
+           create_preprocess_pipeline(),
+           create_encoding_pipeline(), 
+        
+        ],tags="de_pipeline",    
+        )        
     )

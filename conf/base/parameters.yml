@@ -1,0 +1,33 @@
+de_params:
+  Outlier_params:
+    'campaign': 10
+    'duration': 1500
+  Drop_columns:
+    - 'pdays'
+  Imputation_columns:
+    - 'default'
+    - 'marital'
+    - 'loan'
+    - 'education'
+    - 'housing'
+  Feature_Selection:
+    - 'pdays'
+    - 'emp.var.rate'
+    - 'cons.price.idx'
+    - 'euribor3m'
+    - 'nr.employed'
+  Encoding:
+    BinaryEncoder:
+      - deposit
+      - loan
+      - default
+      - housing
+    Ordinal_Encoder:
+      - month
+      - day_of_week
+      - contact
+      - poutcome
+    Onehot_Encoder:
+      - job
+      - marital
+      - education
