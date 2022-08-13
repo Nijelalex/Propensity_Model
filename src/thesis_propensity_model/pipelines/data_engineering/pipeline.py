@@ -1,34 +1,21 @@
-"""Data Preprocessing Node
+"""Data Engineering Pipeline
 """
 
-from kedro.pipeline import node, pipeline
-from .nodes import outlier_removal,data_imputation,feature_selection_dedupe
+
+from thesis_propensity_model.pipelines.data_engineering.Preprocessing.pipeline import create_preprocess_pipeline
+from thesis_propensity_model.pipelines.data_engineering.Data_Encoding.pipeline import create_encoding_pipeline
+from kedro.pipeline import pipeline, Pipeline
 
 
-def create_pipeline(**kwargs):
+
+def create_de_pipeline():
+    
     return pipeline(
+        pipe=Pipeline(
         [
-            node(
-                func=outlier_removal,
-                inputs=["bank_raw","params:de_params"],
-                outputs="outlier_removed_table",
-                name="Outlier_Removal",
-                tags="de",
-            ),
-            node(
-                func=data_imputation,
-                inputs=["outlier_removed_table","params:de_params"],
-                outputs="imputed_table",
-                name="Data_Imputation",
-                tags="de",
-            ),
-            node(
-                func=feature_selection_dedupe,
-                inputs=["imputed_table","params:de_params"],
-                outputs="fs_table",
-                name="Feature_Selection",
-                tags="de",
-            ),
-        ],
+           create_preprocess_pipeline(),
+           create_encoding_pipeline(), 
         
+        ],tags="de_pipeline",    
+        )        
     )

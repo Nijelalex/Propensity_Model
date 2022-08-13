@@ -16,4 +16,18 @@ de_params:
     - 'cons.price.idx'
     - 'euribor3m'
     - 'nr.employed'
-
+  Encoding:
+    BinaryEncoder:
+      - deposit
+      - loan
+      - default
+      - housing
+    Ordinal_Encoder:
+      - month
+      - day_of_week
+      - contact
+      - poutcome
+    Onehot_Encoder:
+      - job
+      - marital
+      - education

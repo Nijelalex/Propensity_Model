@@ -26,4 +26,19 @@ imputed_table:
 fs_table:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/fs_table.pq
+  layer: primary
+
+binary_encoded_data:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/binary_encoded_data.pq
+  layer: primary
+
+label_encoded_data:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/label_encoded_data.pq
+  layer: primary
+
+model_input_table:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/model_input_table.pq
   layer: primary  

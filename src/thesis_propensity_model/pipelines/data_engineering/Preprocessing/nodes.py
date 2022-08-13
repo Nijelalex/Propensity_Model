@@ -49,13 +49,16 @@ def data_imputation(df: pd.DataFrame,config: Dict):
     return df
     
 def feature_selection_dedupe(df: pd.DataFrame,config: Dict):
-    """Factor Analysis on Economic indicators"""
+    """Factor Analysis on Economic indicators and remove columns"""
     df['Economic_Indicators']=FactorAnalysis(n_components=1).fit_transform(df[config["Feature_Selection"]])
     df=df.drop(config["Feature_Selection"],axis=1)
     df=df.drop_duplicates()
+    df.rename(columns={'y':'deposit'},inplace=True)
 
     logger = logging.getLogger(__name__)
     logger.info(f"Column names are: {df.columns.tolist()}")
     logger.info(f"df shape: {df.shape}")
 
     return df
+
+
