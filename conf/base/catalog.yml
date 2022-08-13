@@ -12,3 +12,18 @@ model_input_table:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/model_input_table.pq
   layer: primary
+
+outlier_removed_table:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/outlier_removed_table.pq
+  layer: primary
+
+imputed_table:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/imputed_table.pq
+  layer: primary
+
+fs_table:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/fs_table.pq
+  layer: primary  

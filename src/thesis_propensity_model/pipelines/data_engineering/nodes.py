@@ -7,40 +7,55 @@ from typing import Any, Dict
 import pandas as pd
 import logging
 import numpy as np
-
-# categoricals: gender, region code, driving license, previously insured,
-#   vehicle damage,
-# ordinal: vehicle age
-
-# def trim_outliers(x: pd.Series, q1=0.05, q3=0.95) -> pd.Series:
-#     quartile1 = x.quantile(q1)
-#     quartile3 = x.quantile(q3)
-#     interquantile_range = quartile3 - quartile1
-#     up_limit = quartile3 + 3 * interquantile_range
-#     low_limit = quartile1 - 3 * interquantile_range
-
-#     # cap (tukey's fences)
-#     return x.clip(lower=low_limit, upper=up_limit)
+from sklearn.decomposition import FactorAnalysis
 
 
-# def ordinal_vehicle_age(x_veh_age: pd.Series) -> pd.Series: 
-#     x_veh_age.loc[x_veh_age == "< 1 Year"] = 1
-#     x_veh_age.loc[x_veh_age == "1-2 Year"] = 2
-#     x_veh_age.loc[x_veh_age == "> 2 Years"] = 3
-#     x_veh_age = x_veh_age.fillna(0)
-#     return x_veh_age
+def imputation(x: pd.Series) -> pd.Series: 
+    #Impute by the mode
+    x=x.replace('unknown',np.nan) 
+    x=x.fillna(x.mode()[0])
+    return x
 
 
-def preprocess(df: pd.DataFrame,config: Dict) -> pd.DataFrame:
-    """Preprocesses the data.
+def outlier_removal(df: pd.DataFrame,config: Dict) -> pd.DataFrame:
+    """Removes the outliers from data.
     Args:
         df: Raw data.
     Returns:
         Preprocessed data
     """
     bank_int=df.copy()
-    for k,v in config.items():
+    
+    #Remove outliers for some features as defined in the parameters
+    for k,v in config['Outlier_params'].items():
         bank_int=bank_int[~(bank_int[k]>v)]
+    
     logger = logging.getLogger(__name__)
-    logger.info(f"Column names are: {bank_int.columns.tolist()}")
+    logger.info(f"Column names are: {bank_int.columns.tolist()}")  
+    
     return bank_int
+
+def data_imputation(df: pd.DataFrame,config: Dict):
+    """Impute the nulls in the data
+    Input: Dataframe
+    Returns: Dataframe after imputation
+    """
+    for col in config['Imputation_columns']:
+        df[col]=imputation(df[col])
+    
+    logger = logging.getLogger(__name__)
+    logger.info(f"Column names are: {df.columns.tolist()}")
+
+    return df
+    
+def feature_selection_dedupe(df: pd.DataFrame,config: Dict):
+    """Factor Analysis on Economic indicators"""
+    df['Economic_Indicators']=FactorAnalysis(n_components=1).fit_transform(df[config["Feature_Selection"]])
+    df=df.drop(config["Feature_Selection"],axis=1)
+    df=df.drop_duplicates()
+
+    logger = logging.getLogger(__name__)
+    logger.info(f"Column names are: {df.columns.tolist()}")
+    logger.info(f"df shape: {df.shape}")
+
+    return df
