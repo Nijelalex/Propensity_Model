@@ -2,10 +2,10 @@
 """
 
 from kedro.pipeline import pipeline, Pipeline
-from thesis_propensity_model.pipelines.data_engineering.Preprocessing.pipeline import (
+from thesis_propensity_model.pipelines.data_engineering.preprocessing.pipeline import (
     create_preprocess_pipeline,
 )
-from thesis_propensity_model.pipelines.data_engineering.Data_Encoding.pipeline import (
+from thesis_propensity_model.pipelines.data_engineering.data_encoding.pipeline import (
     create_encoding_pipeline,
 )
 

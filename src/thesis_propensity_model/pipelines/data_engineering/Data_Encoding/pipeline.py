@@ -5,7 +5,8 @@ from kedro.pipeline import node, pipeline
 from .nodes import binary_encoding, label_encoding, onehotencoding
 
 
-def create_encoding_pipeline(**kwargs):
+def create_encoding_pipeline():
+    """Encoding Pipeline"""
     return pipeline(
         [
             node(
