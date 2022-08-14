@@ -5,7 +5,8 @@ from kedro.pipeline import node, pipeline
 from .nodes import outlier_removal, data_imputation, feature_selection_dedupe
 
 
-def create_preprocess_pipeline(**kwargs):
+def create_preprocess_pipeline():
+    """Preprocess pipeline"""
     return pipeline(
         [
             node(
