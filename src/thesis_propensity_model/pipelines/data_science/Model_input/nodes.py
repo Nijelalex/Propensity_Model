@@ -3,9 +3,9 @@ Preprocessing the Data for creating model input
 """
 
 from typing import Dict
-
-import pandas as pd
 import logging
+import pandas as pd
+
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE

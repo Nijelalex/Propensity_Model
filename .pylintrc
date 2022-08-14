@@ -448,6 +448,8 @@ logging-format-style=old
 # function parameter format.
 logging-modules=logging
 
+disable=logging-fstring-interpolation
+
 
 [MISCELLANEOUS]
 
