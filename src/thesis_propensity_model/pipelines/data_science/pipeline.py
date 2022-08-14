@@ -7,7 +7,6 @@ from thesis_propensity_model.pipelines.data_science.model_input.pipeline import 
 )
 
 
-
 def create_ds_pipeline():
     """Create DS pipeline"""
     return pipeline(

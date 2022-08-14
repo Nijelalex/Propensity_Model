@@ -10,7 +10,6 @@ from thesis_propensity_model.pipelines.data_engineering.data_encoding.pipeline i
 )
 
 
-
 def create_de_pipeline():
     """The De pipeline that runs preprocess and encoding pipelines"""
     return pipeline(

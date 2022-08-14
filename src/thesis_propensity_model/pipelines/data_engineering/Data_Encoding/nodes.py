@@ -43,7 +43,9 @@ def label_encoding(df_encoded: pd.DataFrame, config: Dict):
 
 def onehotencoding(df_encoded: pd.DataFrame, config: Dict):
     """Factor Analysis on Economic indicators and remove columns"""
-    df_encoded = pd.get_dummies(df_encoded, columns=config["Encoding"]["Onehot_Encoder"])
+    df_encoded = pd.get_dummies(
+        df_encoded, columns=config["Encoding"]["Onehot_Encoder"]
+    )
 
     logger = logging.getLogger(__name__)
     logger.info(f"Column names are: {df_encoded.columns.tolist()}")
