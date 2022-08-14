@@ -7,7 +7,6 @@ from thesis_propensity_model.pipelines import data_engineering as de
 from thesis_propensity_model.pipelines import data_science as ds
 
 
-
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.
 
@@ -17,10 +16,9 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_engineering_pipeline = de.create_de_pipeline()
     data_science_pipeline = ds.create_ds_pipeline()
 
-
     return {
-        "de":data_engineering_pipeline,
-        "ds":data_science_pipeline,
-        "overall":data_engineering_pipeline + data_science_pipeline,
+        "de": data_engineering_pipeline,
+        "ds": data_science_pipeline,
+        "overall": data_engineering_pipeline + data_science_pipeline,
         "__default__": data_engineering_pipeline + data_science_pipeline,
-        }
+    }
