@@ -1,0 +1,7 @@
+ds_params:
+  split_params:
+    'n_splits': 1
+    'test_size': 0.3
+    'random_state' : 1
+  tgt_variable:
+    - 'deposit'  

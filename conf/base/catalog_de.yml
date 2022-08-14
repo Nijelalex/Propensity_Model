@@ -8,11 +8,6 @@ bank_raw:
   filepath: data/01_raw/bank-additional-full.csv
   layer: raw
 
-model_input_table:
-  type: pandas.ParquetDataSet
-  filepath: data/03_primary/model_input_table.pq
-  layer: primary
-
 outlier_removed_table:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/outlier_removed_table.pq
@@ -40,5 +35,5 @@ label_encoded_data:
 
 model_input_table:
   type: pandas.ParquetDataSet
-  filepath: data/03_primary/model_input_table.pq
-  layer: primary  
+  filepath: data/05_model_input/model_input_table.pq
+  layer: model_input  
