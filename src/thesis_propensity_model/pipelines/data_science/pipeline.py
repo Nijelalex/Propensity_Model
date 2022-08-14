@@ -2,32 +2,33 @@
 """
 
 from kedro.pipeline import node, pipeline
-from .nodes import outlier_removal,data_imputation,feature_selection_dedupe
+from .nodes import split_data, standard_scaler, class_imbalance
 
 
 def create_ds_pipeline(**kwargs):
     return pipeline(
         [
+            
             node(
-                func=outlier_removal,
-                inputs=["bank_raw","params:de_params"],
-                outputs="outlier_removed_table",
-                name="Outlier_Removal",
-                tags="de",
+                func=split_data,
+                inputs=["model_input_table","params:ds_params"],
+                outputs=["train_df","test_df"],
+                name="Train-Test_split",
+                tags="ds",
             ),
             node(
-                func=data_imputation,
-                inputs=["outlier_removed_table","params:de_params"],
-                outputs="imputed_table",
-                name="Data_Imputation",
-                tags="de",
+                func=standard_scaler,
+                inputs=["train_df","test_df","params:ds_params"],
+                outputs=["X_train_scaled","Y_train","X_test_scaled","Y_test"],
+                name="Scaled_data",
+                tags="ds",
             ),
             node(
-                func=feature_selection_dedupe,
-                inputs=["imputed_table","params:de_params"],
-                outputs="fs_table",
-                name="Feature_Selection",
-                tags="de",
+                func=class_imbalance,
+                inputs=["X_train_scaled","Y_train","params:ds_params"],
+                outputs=["X_smote","Y_smote"],
+                name="class_imbalance",
+                tags="ds",
             ),
         ],
         
