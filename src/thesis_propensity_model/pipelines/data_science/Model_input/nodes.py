@@ -2,14 +2,12 @@
 Preprocessing the Data for creating model input
 """
 
-from typing import Any, Dict
+from typing import Dict
 
 import pandas as pd
 import logging
-import numpy as np
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.preprocessing import StandardScaler
-import imblearn
 from imblearn.over_sampling import SMOTE
 
 
@@ -61,7 +59,7 @@ def standard_scaler(df: pd.DataFrame, df1: pd.DataFrame, config: Dict) -> pd.Dat
     return X_train_s, Y_train, X_test_s, Y_test
 
 
-def class_imbalance(df: pd.DataFrame, df1: pd.DataFrame, config: Dict) -> pd.DataFrame:
+def class_imbalance(df: pd.DataFrame, df1: pd.DataFrame) -> pd.DataFrame:
     """Splits the data into train-test.
     Args:
         df: X train scaled.

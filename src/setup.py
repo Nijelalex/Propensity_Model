@@ -1,3 +1,5 @@
+"""Setup File"""
+
 from setuptools import find_packages, setup
 
 entry_point = "thesis-propensity-model = thesis_propensity_model.__main__:main"

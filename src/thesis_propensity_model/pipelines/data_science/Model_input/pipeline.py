@@ -5,7 +5,8 @@ from kedro.pipeline import node, pipeline
 from .nodes import split_data, standard_scaler, class_imbalance
 
 
-def model_input_pipeline(**kwargs):
+def model_input_pipeline():
+    """Model input pipeline"""
     return pipeline(
         [
             node(
@@ -24,7 +25,7 @@ def model_input_pipeline(**kwargs):
             ),
             node(
                 func=class_imbalance,
-                inputs=["X_train_scaled", "Y_train", "params:ds_params"],
+                inputs=["X_train_scaled", "Y_train"],
                 outputs=["X_smote", "Y_smote"],
                 name="class_imbalance",
                 tags="ds",
