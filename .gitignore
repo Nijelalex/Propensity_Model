@@ -9,6 +9,9 @@ conf/local/**
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
 
+#ignore catboost
+catboost_info/**
+
 # ignore mlruns folder
 mlruns/** 
 
