@@ -2,7 +2,7 @@
 """
 
 from kedro.pipeline import node, pipeline
-from .nodes import split_data, standard_scaler, class_imbalance
+from .nodes import fit_xgb, fit_logistic_regression, fit_knn, fit_svc, fit_nb
 
 
 def model_training_pipeline():
@@ -10,25 +10,40 @@ def model_training_pipeline():
     return pipeline(
         [
             node(
-                func=split_data,
-                inputs=["model_input_table", "params:ds_params"],
-                outputs=["train_df", "test_df"],
-                name="Train-Test_split",
+                func=fit_logistic_regression,
+                inputs=["X_smote", "Y_smote", "params:ds_params"],
+                outputs="lr_model",
+                name="lr_model",
                 tags="ds",
             ),
             node(
-                func=standard_scaler,
-                inputs=["train_df", "test_df", "params:ds_params"],
-                outputs=["X_train_scaled", "Y_train", "X_test_scaled", "Y_test"],
-                name="Scaled_data",
+                func=fit_knn,
+                inputs=["X_smote", "Y_smote", "params:ds_params"],
+                outputs="knn_model",
+                name="knn_model",
                 tags="ds",
             ),
             node(
-                func=class_imbalance,
-                inputs=["X_train_scaled", "Y_train"],
-                outputs=["X_smote", "Y_smote"],
-                name="class_imbalance",
+                func=fit_svc,
+                inputs=["X_smote", "Y_smote", "params:ds_params"],
+                outputs="svc_model",
+                name="svc_model",
                 tags="ds",
             ),
+            node(
+                func=fit_nb,
+                inputs=["X_smote", "Y_smote", "params:ds_params"],
+                outputs="nb_model",
+                name="nb_model",
+                tags="ds",
+            ),
+            node(
+                func=fit_xgb,
+                inputs=["X_smote", "Y_smote", "params:ds_params"],
+                outputs="xgb_model",
+                name="xgb_model",
+                tags="ds",
+            ),
+            
         ],
     )

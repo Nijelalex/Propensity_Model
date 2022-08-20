@@ -6,72 +6,129 @@ from typing import Dict
 import logging
 import pandas as pd
 
+from sklearn.linear_model import LogisticRegression #logistic regression
+from sklearn import svm #support vector Machine
+from sklearn.neighbors import KNeighborsClassifier #KNN
+from sklearn.naive_bayes import GaussianNB #Naive bayes
+from sklearn.tree import DecisionTreeClassifier #Decision Tree
+import xgboost 
 
 
-def split_data(input_df: pd.DataFrame, config: Dict) -> pd.DataFrame:
-    """Splits the data into train-test.
+def fit_logistic_regression(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+): 
+    """Fit Model
     Args:
-        df: Model input.
+        X_Smote: Train_Df.
+        Y_Smote: Test_Df.
+        config: ds parameters
     Returns:
-        train and test data
+        Trained Model
     """
-    x_data = input_df.drop(config["tgt_variable"][0], axis=1)
-    y_data = input_df[config["tgt_variable"][0]]
-    stratified_shuffle = StratifiedShuffleSplit(
-        n_splits=1, test_size=0.3, random_state=1
-    )
-    for train_index, test_index in stratified_shuffle.split(x_data, y_data):
-        train_df = input_df.iloc[train_index]
-        test_df = input_df.iloc[test_index]
+    params=config['lr_params']
+    lr = LogisticRegression(**params)
+    lr.fit(x_smote,y_smote)
+
 
     logger = logging.getLogger(__name__)
-    logger.info(f"Column names are: {train_df.shape,test_df.shape}")
+    logger.info(
+        "Model Pickled for logistic regression "
+    )
 
-    return train_df, test_df
+    return lr
+
+def fit_knn(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+):
+    """Fit Model
+    Args:
+        X_Smote: Train_Df.
+        Y_Smote: Test_Df.
+        config: ds parameters
+    Returns:
+        Trained Model
+    """
+    params=config['knn_params']
+    knn = KNeighborsClassifier(**params)
+    knn.fit(x_smote,y_smote)
 
 
-def standard_scaler(
-    train_df: pd.DataFrame, test_df: pd.DataFrame, config: Dict
-) -> pd.DataFrame:
+    logger = logging.getLogger(__name__)
+    logger.info(
+        "Model Pickled for KNN "
+    )
+
+    return knn
+
+
+def fit_svc(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+):
+    """Fit Model
+    Args:
+        X_Smote: Train_Df.
+        Y_Smote: Test_Df.
+        config: ds parameters
+    Returns:
+        Trained Model
+    """
+    params=config['svc_params']
+    svc = svm.SVC(**params)
+    svc.fit(x_smote,y_smote)
+
+
+    logger = logging.getLogger(__name__)
+    logger.info(
+        "Model Pickled for SVC "
+    )
+
+    return svc
+
+def fit_nb(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+):
+    """Fit Model
+    Args:
+        X_Smote: Train_Df.
+        Y_Smote: Test_Df.
+        config: ds parameters
+    Returns:
+        Trained Model
+    """
+    params=config['nb_params']
+    nb = GaussianNB(**params)
+    nb.fit(x_smote,y_smote)
+
+
+    logger = logging.getLogger(__name__)
+    logger.info(
+        "Model Pickled for SVC "
+    )
+
+    return nb
+
+
+def fit_xgb(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+):
     """Splits the data into train-test.
     Args:
         df: Train_Df.
         df1: Test_Df.
         config: ds parameters
     Returns:
-        train and test data
+        Trained Model
     """
+    params=config['xgb_params']
+    xgb = xgboost.XGBClassifier(**params)
+    xgb.fit(x_smote,y_smote)
 
-    # Get Feature table and target table
-    x_train = train_df.drop(config["tgt_variable"][0], axis=1)
-    y_train = train_df[config["tgt_variable"][0]]
-    x_test = test_df.drop(config["tgt_variable"][0], axis=1)
-    y_test = test_df[config["tgt_variable"][0]]
-
-    standard_scaler_func = StandardScaler()
-    x_train_s = standard_scaler_func.fit_transform(x_train)
-    x_test_s = standard_scaler_func.transform(x_test)
 
     logger = logging.getLogger(__name__)
     logger.info(
-        f"Column names are: {x_train.shape,y_train.shape, x_train_s.shape, x_test_s.shape}"
+        "Model Pickled for xgb "
     )
 
-    return x_train_s, y_train, x_test_s, y_test
+    return xgb
 
 
-def class_imbalance(x_train_s: pd.DataFrame, y_train: pd.DataFrame) -> pd.DataFrame:
-    """Splits the data into train-test.
-    Args:
-        df: X train scaled.
-        df1: Y train
-    Returns:
-        X_smote, Y_smote
-    """
-    smote = SMOTE()
-    x_smote, y_smote = smote.fit_resample(x_train_s, y_train)
-
-    logger = logging.getLogger(__name__)
-    logger.info(f"Column names are: {x_smote.shape,y_smote.shape}")
-
-    return x_smote, y_smote
