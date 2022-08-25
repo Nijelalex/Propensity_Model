@@ -37,3 +37,11 @@ model_input_table:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/model_input_table.pq
   layer: model_input  
+
+# model_input_table:
+#   type: pandas.SQLTableDataSet
+#   table_name: model_input
+#   credentials: db_credentials
+#   layer: model_input 
+#   save_args:
+#     if_exists: replace 
