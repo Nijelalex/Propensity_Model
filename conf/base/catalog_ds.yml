@@ -45,9 +45,9 @@ Y_smote:
   filepath: data/05_model_input/Y_smote.pkl
   layer: model_input
 
-xgb_model:
+fit_model:
   type: pickle.PickleDataSet
-  filepath: data/06_models/xgb_model.pkl
+  filepath: data/06_models/fit_model.pkl
   backend: pickle
 
 model_container:
