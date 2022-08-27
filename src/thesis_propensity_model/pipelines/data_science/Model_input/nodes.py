@@ -50,6 +50,7 @@ def standard_scaler(
     y_train = train_df[config["tgt_variable"][0]]
     x_test = test_df.drop(config["tgt_variable"][0], axis=1)
     y_test = test_df[config["tgt_variable"][0]]
+    
 
     standard_scaler_func = StandardScaler()
     x_train_s = standard_scaler_func.fit_transform(x_train)

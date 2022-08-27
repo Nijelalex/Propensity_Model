@@ -5,15 +5,15 @@ ds_params:
     'random_state' : 1
   tgt_variable:
     - 'deposit'  
-  xgb_params:
-    n_estimators: 80
-    learning_rate: 0.1
-    gamma: 0
-    subsample: 0.75
-    colsample_bytree: 1
-    max_depth: 5
-  lr_params:
-  knn_params:
-  svc_params:
-  nb_params:
+  model_params:
+    model_name: CatBoostClassifier
+    scoring_params : ['accuracy','precision','recall','f1','roc_auc']
+    refit: roc_auc
+    param_distributions:
+      depth: [4,5,6,]
+      learning_rate: [0.1,0.2,0.3,]
+      n_estimators: [100,200,300,]
+    random_state: 43
+
+
     

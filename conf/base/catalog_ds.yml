@@ -9,6 +9,7 @@ train_df:
   filepath: data/05_model_input/train_df.pq
   layer: model_input
 
+
 test_df:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/train_df.pq
@@ -45,12 +46,32 @@ Y_smote:
   filepath: data/05_model_input/Y_smote.pkl
   layer: model_input
 
-xgb_model:
+fit_model:
   type: pickle.PickleDataSet
-  filepath: data/06_models/xgb_model.pkl
+  filepath: data/06_models/fit_model.pkl
   backend: pickle
+  layer: models
 
-model_container:
+classification_report:
   type: pickle.PickleDataSet
-  filepath: data/06_models/model_container.pkl
+  filepath: data/07_model_output/classification_report.pkl
   backend: pickle
+  layer: model_output
+
+confusion_matrix:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/confusion_matrix.pkl
+  backend: pickle
+  layer: model_output
+
+performance_metric:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/performance_metric.pkl
+  backend: pickle
+  layer: model_output
+
+shap_val:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/shap_val.pkl
+  backend: pickle
+  layer: model_output
