@@ -150,7 +150,7 @@ def evaluate_model(
 
 
 def explainability(
-    model_fit: Dict, x_test: pd.DataFrame, config: Dict
+    model_fit: Dict, x_test: pd.DataFrame, train_df: pd.DataFrame, config: Dict
 ):
     """Model_fit: the fit model"""
     model_best=model_fit.best_estimator_
@@ -160,7 +160,11 @@ def explainability(
     # Calculates the SHAP values - It takes some time
     plt.figure()
     shap_values = explainer.shap_values(x_test)
-    shap.summary_plot(shap_values,x_test,show=False)
+    
+    train_df=train_df.drop(config["tgt_variable"][0], axis=1)
+    x_test_df=pd.DataFrame(x_test,columns=train_df.columns)
+
+    shap.summary_plot(shap_values,x_test_df,show=False)
     plt.tight_layout()
     summary_plot=plt.gcf()
     ax=plt.gca()

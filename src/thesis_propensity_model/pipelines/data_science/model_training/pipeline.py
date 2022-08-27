@@ -2,7 +2,7 @@
 """
 
 from kedro.pipeline import node, pipeline
-from .nodes import fit_model, evaluate_model, explainability
+from .nodes import fit_model, evaluate_model, explainability, inference_data
 
 
 def model_training_pipeline():
@@ -25,11 +25,17 @@ def model_training_pipeline():
             ),
             node(
                 func=explainability,
-                inputs=["fit_model","X_test_scaled","params:ds_params"],
+                inputs=["fit_model","X_test_scaled","train_df","params:ds_params"],
                 outputs="shap_val",
-                name="Model_explain",
+                name="model_explain",
                 tags="ds",
             ),
-
+            node(
+                func=inference_data,
+                inputs=["fit_model","params:ds_params"],
+                outputs="inference_data",
+                name="inference",
+                tags="ds",
+            ),
         ],
     )
