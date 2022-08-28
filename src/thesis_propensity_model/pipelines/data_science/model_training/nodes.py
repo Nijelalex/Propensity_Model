@@ -178,11 +178,3 @@ def explainability(
     )
 
     return shap_values
-
-# def inference(
-#     model_fit: Dict, config: Dict
-# ):
-
-#     """Inference data derived"""
-
-
