@@ -44,4 +44,44 @@ inference_data_db:
   credentials: db_credentials
   layer: raw 
   save_args:
+    if_exists: replace
+
+inference_final:
+  type: pandas.SQLTableDataSet
+  table_name: inference_final
+  credentials: db_credentials
+  layer: model_output 
+  save_args:
+    if_exists: replace
+
+inf_predict:
+  type: pandas.SQLTableDataSet
+  table_name: inf_predict
+  credentials: db_credentials
+  layer: model_output 
+  save_args:
+    if_exists: replace  
+
+customer_final:
+  type: pandas.SQLTableDataSet
+  table_name: customer_list
+  credentials: db_credentials
+  layer: model_output 
+  save_args:
+    if_exists: replace 
+
+crm_input:
+  type: pandas.SQLTableDataSet
+  table_name: crm_input
+  credentials: db_credentials
+  layer: model_output 
+  save_args:
+    if_exists: replace 
+
+crm_shap:
+  type: pandas.SQLTableDataSet
+  table_name: crm_shap
+  credentials: db_credentials
+  layer: model_output 
+  save_args:
     if_exists: replace 

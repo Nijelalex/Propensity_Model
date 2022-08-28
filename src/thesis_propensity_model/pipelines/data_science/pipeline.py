@@ -9,6 +9,10 @@ from thesis_propensity_model.pipelines.data_science.model_training.pipeline impo
     model_training_pipeline,
 )
 
+from thesis_propensity_model.pipelines.data_science.inference.pipeline import (
+    inference_pipeline,
+)
+
 def create_ds_pipeline():
     """Create DS pipeline"""
     return pipeline(
@@ -16,6 +20,8 @@ def create_ds_pipeline():
             [
                 model_input_pipeline(),
                 model_training_pipeline(),
+                inference_pipeline(),
+
             ],
             tags="ds_pipeline",
         )
