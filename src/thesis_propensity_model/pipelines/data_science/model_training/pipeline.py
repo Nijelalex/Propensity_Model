@@ -2,7 +2,7 @@
 """
 
 from kedro.pipeline import node, pipeline
-from .nodes import fit_model, evaluate_model, explainability, inference
+from .nodes import fit_model, evaluate_model, explainability
 
 
 def model_training_pipeline():
