@@ -38,10 +38,10 @@ model_input_table:
   filepath: data/05_model_input/model_input_table.pq
   layer: model_input  
 
-# model_input_table:
-#   type: pandas.SQLTableDataSet
-#   table_name: model_input
-#   credentials: db_credentials
-#   layer: model_input 
-#   save_args:
-#     if_exists: replace 
+inference_data_db:
+  type: pandas.SQLTableDataSet
+  table_name: inference_data
+  credentials: db_credentials
+  layer: raw 
+  save_args:
+    if_exists: replace 
