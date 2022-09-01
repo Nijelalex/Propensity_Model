@@ -53,7 +53,12 @@ def final_inference(input_df: pd.DataFrame, score_df: pd.DataFrame, cif_df: pd.D
     """
     df_spine = pd.concat([cif_df,score_df], axis=1)
     CRM_table=df_spine.merge(input_df, on="Customer", how="inner" )
-    CRM_Shap=inf_shap
+    CRM_table=CRM_table.sort_values(by='Score', ascending=False)
+    CRM_table["Status"]=""
+    CRM_table["Description"]=""
+
+    CRM_Shap=inf_shap.reindex(CRM_table.index)
+    cif_df=cif_df.reindex(CRM_table.index)
     CRM_Shap.index=list(cif_df["Customer"])
 
     return CRM_table, CRM_Shap
