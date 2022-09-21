@@ -18,6 +18,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import StackingClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import StratifiedKFold
 from sklearn import metrics
@@ -39,7 +40,7 @@ import importlib
 
 
 def fit_model(
-    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict,
 ): 
     """Fit Model
     Args:
@@ -65,8 +66,8 @@ def fit_model(
     model_fit = GridSearchCV(model, param_grid=parameter_grid, scoring=scoring,  refit='roc_auc', cv =cross_validation)
     model_fit.fit(x_smote,y_smote)
 
-    mlflow.log_param("Model Name", config['model_params']['model_name'])
-    mlflow.log_param("Model Parameters", model_fit.best_params_)
+    mlflow.log_param("Model Name " + config['model_num'], config['model_params']['model_name'])
+    mlflow.log_param("Model Parameters " + config['model_num'], model_fit.best_params_)
     mlflow.log_metric(config['model_params']['model_name'] + "_best_score",model_fit.best_score_)
 
 
@@ -76,6 +77,47 @@ def fit_model(
     )
 
     return model_fit
+
+
+def final_model(
+    x_smote: pd.DataFrame, y_smote: pd.DataFrame, config: Dict, fit_model, fit_model1
+): 
+    """Final Model
+    Args:
+        X_Smote: Train_Df.
+        Y_Smote: Test_Df.
+        config: ds parameters
+    Returns:
+        Trained Model (Depending on stack_params)
+    """
+    #Stack parameter
+    stack_flag = config['stack_flag']
+    #Random state for training to get consistent results
+    if stack_flag:
+        #Define scoring params
+        scoring=config['model_params']['scoring_params']
+        #Cross validation params
+        cross_validation = StratifiedKFold(n_splits=5)
+        clf1 = fit_model.best_estimator_
+        clf2 = fit_model1.best_estimator_
+        model_final = StackingClassifier(classifiers=[clf1,clf2], 
+                          use_probas=True,
+                          meta_classifier=clf2)
+        #Fit Model
+        model_final.fit(x_smote,y_smote)
+        mlflow.log_param("Final Model Name", 'Stacked Classifier')
+
+    else:
+        model_final=fit_model
+        mlflow.log_param("Final Model Name", 'Model1')
+    
+
+    logger = logging.getLogger(__name__)
+    logger.info(
+        f"Final Model Pickled for stack condition : {stack_flag}"
+    )
+
+    return model_final
 
 
 def evaluate_model(
@@ -89,8 +131,11 @@ def evaluate_model(
     Returns:
         Trained Model
     """
+    
     model_name=config['model_params']['model_name']
-    model_best=model_fit.best_estimator_
+    if config['stack_flag']:
+        model_name='Stacked_Model'
+    model_best=model_fit
     y_pred_test=model_best.predict(x_test)
     y_pred_train=model_best.predict(x_smote)
 

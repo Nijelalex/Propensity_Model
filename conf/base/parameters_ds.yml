@@ -1,4 +1,5 @@
 ds_params:
+  stack_flag: True
   split_params:
     'n_splits': 1
     'test_size': 0.3
@@ -13,7 +14,34 @@ ds_params:
       depth: [4,5,6,]
       learning_rate: [0.1,0.2,0.3,]
       n_estimators: [100,200,300,]
+      # investigate prune trees
     random_state: 43
+  model_num: '1'
 
+
+ds_params1:
+  stack_flag: True
+  split_params:
+    'n_splits': 1
+    'test_size': 0.3
+    'random_state' : 1
+  tgt_variable:
+    - 'deposit'  
+  model_params:
+    model_name: RandomForestClassifier
+    scoring_params : ['accuracy','precision','recall','f1','roc_auc']
+    refit: roc_auc
+    param_distributions:
+      n_estimators: [100,200,500,]
+      max_features: ['auto', 'sqrt', 'log2']
+      max_depth: [4,5,6,7,8,]
+      criterion: ['gini', 'entropy']
+      # investigate prune trees
+    random_state: 43
+  model_num: '2'
+# Algorithm - Stacking, Blending Models, Introduce a new feature with frozen random values and validate Feature importance
+#active learning
+#Start documenting 
+# Presentation - Simple diagram on connecting all microservices
 
     
