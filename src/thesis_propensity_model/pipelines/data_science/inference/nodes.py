@@ -34,7 +34,7 @@ def predict_inference(input_df: pd.DataFrame, config: Dict,config_ds: Dict, mode
     standard_scaler_func = StandardScaler()
     final_table = standard_scaler_func.fit_transform(model_input)
     final_table = pd.DataFrame(final_table,columns=model_input.columns)
-    model_best=model_fit.best_estimator_
+    model_best=model_fit
     inf_predict=model_best.predict(final_table)
     inf_score=model_best.predict_proba(final_table)[:,1]
     inf_predict = pd.DataFrame({'Prediction': inf_predict,'Score': inf_score}, columns=['Prediction', 'Score'])

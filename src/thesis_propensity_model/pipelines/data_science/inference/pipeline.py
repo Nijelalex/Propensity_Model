@@ -11,7 +11,7 @@ def inference_pipeline():
         [
             node(
                 func=predict_inference,
-                inputs=["inference_data_db", "params:de_params","params:ds_params","fit_model"],
+                inputs=["inference_data_db", "params:de_params","params:ds_params","final_model"],
                 outputs=["inference_final","inf_predict","customer_final"],
                 name="predict_inference",
                 tags="inf",

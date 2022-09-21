@@ -52,6 +52,18 @@ fit_model:
   backend: pickle
   layer: models
 
+fit_model1:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/fit_model1.pkl
+  backend: pickle
+  layer: models
+
+final_model:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/final_model.pkl
+  backend: pickle
+  layer: models
+
 classification_report:
   type: pickle.PickleDataSet
   filepath: data/07_model_output/classification_report.pkl
