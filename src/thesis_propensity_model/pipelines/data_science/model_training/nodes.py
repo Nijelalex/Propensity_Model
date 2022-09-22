@@ -165,7 +165,15 @@ def evaluate_model(
     mlflow.log_figure(fig,'confusion_matrix.png')
 
     #Classification report
-    class_report=classification_report(y_pred_test,y_test)
+    class_report=classification_report(y_pred_test,y_test, output_dict=True)
+    class_report = pd.DataFrame(class_report).transpose()
+
+    # ## Write csv from stats dataframe
+    class_report.to_csv('Classification_Report.csv')
+
+    # ## Log CSV to MLflow
+    mlflow.log_artifact('Classification_Report.csv')
+
     
     #ROC AUC Curve
 
