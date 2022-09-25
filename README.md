@@ -1,4 +1,4 @@
-# thesis_propensity_model
+# Propensity Modeling in BFSI Industry
 
 ## Overview
 
