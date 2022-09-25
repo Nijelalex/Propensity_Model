@@ -102,7 +102,7 @@ def final_model(
         clf2 = fit_model1.best_estimator_
         model_final = StackingClassifier(classifiers=[clf1,clf2], 
                           use_probas=True,
-                          meta_classifier=clf2)
+                          meta_classifier=clf1)
         #Fit Model
         model_final.fit(x_smote,y_smote)
         mlflow.log_param("Final Model Name", 'Stacked Classifier')
@@ -165,7 +165,15 @@ def evaluate_model(
     mlflow.log_figure(fig,'confusion_matrix.png')
 
     #Classification report
-    class_report=classification_report(y_pred_test,y_test)
+    class_report=classification_report(y_pred_test,y_test, output_dict=True)
+    class_report = pd.DataFrame(class_report).transpose()
+
+    # ## Write csv from stats dataframe
+    class_report.to_csv('Classification_Report.csv')
+
+    # ## Log CSV to MLflow
+    mlflow.log_artifact('Classification_Report.csv')
+
     
     #ROC AUC Curve
 
