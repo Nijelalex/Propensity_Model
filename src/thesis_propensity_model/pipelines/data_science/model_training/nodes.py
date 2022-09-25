@@ -102,7 +102,7 @@ def final_model(
         clf2 = fit_model1.best_estimator_
         model_final = StackingClassifier(classifiers=[clf1,clf2], 
                           use_probas=True,
-                          meta_classifier=clf2)
+                          meta_classifier=clf1)
         #Fit Model
         model_final.fit(x_smote,y_smote)
         mlflow.log_param("Final Model Name", 'Stacked Classifier')
