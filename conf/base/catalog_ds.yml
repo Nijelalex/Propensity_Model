@@ -12,7 +12,7 @@ train_df:
 
 test_df:
   type: pandas.ParquetDataSet
-  filepath: data/05_model_input/train_df.pq
+  filepath: data/05_model_input/test_df.pq
   layer: model_input
 
 X_train_scaled:
