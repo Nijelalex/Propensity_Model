@@ -61,9 +61,9 @@ def fit_model(
     #Refit params
     refit=config['model_params']['refit']
     #Cross validation params
-    cross_validation = StratifiedKFold(n_splits=5)
+    cross_validation = StratifiedKFold(n_splits=3)
     #Fit Model
-    model_fit = GridSearchCV(model, param_grid=parameter_grid, scoring=scoring,  refit='roc_auc', cv =cross_validation)
+    model_fit = GridSearchCV(model, param_grid=parameter_grid, scoring=scoring,  refit=refit, cv =cross_validation)
     model_fit.fit(x_smote,y_smote)
 
     mlflow.log_param("Model Name " + config['model_num'], config['model_params']['model_name'])

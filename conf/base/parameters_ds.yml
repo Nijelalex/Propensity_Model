@@ -11,9 +11,9 @@ ds_params:
     scoring_params : ['accuracy','precision','recall','f1','roc_auc']
     refit: roc_auc
     param_distributions:
-      depth: [4,5,6,]
-      learning_rate: [0.1,0.2,0.3,]
-      n_estimators: [100,200,300,]
+      depth: [6,8,]
+      learning_rate: [0.01]
+      n_estimators: [300,500]
       # investigate prune trees
     random_state: 43
   model_num: '1'
@@ -32,9 +32,9 @@ ds_params1:
     scoring_params : ['accuracy','precision','recall','f1','roc_auc']
     refit: roc_auc
     param_distributions:
-      n_estimators: [100,200,500,]
-      max_features: ['auto', 'sqrt', 'log2']
-      max_depth: [4,5,6,7,8,]
+      n_estimators: [500,800,]
+      max_features: [ 'sqrt', 'log2']
+      max_depth: [6,8]
       criterion: ['gini', 'entropy']
       # investigate prune trees
     random_state: 43
