@@ -1,9 +1,12 @@
-# thesis_propensity_model
+# Propensity Modeling in BFSI Industry
 
 ## Overview
 
 The research is on the use of modeling in the Banking, Financial service, and insurance (BFSI) industry to identify customers with a higher probability (propensity) to use the financial product or service. Banks and other Financial Service organizations traditionally sell their financial products and services using customer outreach marketing campaigns via generic EDMs and calls. The generic nature of the campaign leads to high marketing costs and low sales conversion since the complete customer base is targeted regardless of whether they require the product or not. The proposed propensity model is expected to provide the likelihood of the customers to purchase the financial product or service by analyzing customer-level data like transaction types and history, product holdings, demographics, etc in an effective way. Thus, the customers with higher propensity scores can be targetted as leads leading to higher sales conversion and reduced marketing costs.
 The data for prediction is taken from UCI (Bank Marketing Dataset). A benchmarking process will be used to identify the best classification machine learning algorithms to predict the propensity scores.  The expected outcome at a high level is an end-to-end analytic product or solution which will enable the product managers/relationship managers to identify the best customers and the main drivers to pitch for the sales of the product.
+
+The complete details and architecture of the solution is described in:
+https://crm-prototype-thesis.herokuapp.com/about
 
 
 This is your new Kedro project, which was generated using `Kedro 0.18.2`.
